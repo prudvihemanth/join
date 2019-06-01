@@ -1,0 +1,3 @@
+{"code":"PROTOCOL_ENQUEUE_AFTER_QUIT","fatal":false,"level":"error"}
+{"code":"PROTOCOL_ENQUEUE_AFTER_QUIT","fatal":false,"level":"error"}
+{"code":"ER_DB_CREATE_EXISTS","errno":1007,"sqlMessage":"Can't create database 'bike_db'; database exists","sqlState":"HY000","index":0,"sql":"CREATE DATABASE bike_db","level":"error"}
