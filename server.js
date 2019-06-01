@@ -2,10 +2,11 @@ const Hapi = require('@hapi/hapi');
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
 const HapiSwagger = require('hapi-swagger');
-
-const routes = require('./server/routes/apiRoutes.js');
 require('dotenv').config();
 
+
+const routes = require('./server/routes/apiRoutes.js');
+const logger = require('./server/utils/utils.js');
 
 const init = async () => {
   const server = Hapi.server({
@@ -31,13 +32,12 @@ const init = async () => {
   ]);
 
   await server.route(routes);
-
   await server.start();
-  console.log('Server running on %s', server.info.uri);
+  logger.info(`Server running on ${server.info.uri}`);
 };
 
 process.on('unhandledRejection', (err) => {
-  console.log(err);
+  logger.error(err);
   process.exit(1);
 });
 

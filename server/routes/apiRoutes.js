@@ -5,7 +5,7 @@ const routes = [
     method: 'GET',
     path: '/todo/{id}/',
     options: {
-      handler: (request, h) => 'Hello World!',
+      handler: (request, response) => response.send({ id: request.params.id }),
       description: 'Get todo',
       notes: 'Returns a todo item by the id passed in the path',
       tags: ['api'], // ADD THIS TAG
