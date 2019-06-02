@@ -1,12 +1,21 @@
 const dbconnection = require('../../server/utils/dbConnection.js');
 const logger = require('../utils/logger');
+const dateConverter = require('../utils/dateConvert');
 
 const theftController = {};
 
 theftController.reportCase = async (request, h) => {
-  // create theft and assign police
-  const sqlQuery = `INSERT INTO THEFT (title, description, location, reportedDate, theftDate, ownerId) VALUES ('${request.payload.title}','${request.payload.description}','${request.payload.location},'${request.payload.reportedDate}','${request.payload.theftDate}','${request.payload.ownerId})`;
-  return h.respone(sqlQuery);
+  // create theft and assign p
+  let result;
+  const sqlQuery = `INSERT INTO THEFT (title, description, location, reportedDate, theftDate, ownerId) VALUES ('${request.payload.title}','${request.payload.description}','${request.payload.location}, STR_TO_DATE('${dateConverter.convert(request.payload.reportedDate)}', '%Y-%m-%d'), STR_TO_DATE('${dateConverter.convert(request.payload.theftDate)}, '%Y-%m-%d')','${request.payload.ownerId})`;
+  dbconnection.then((conn) => {
+    result = conn.query(sqlQuery);
+    return result;
+  }).catch((err) => {
+    logger.error(err);
+    return h.response(err);
+  });
+  return sqlQuery;
 };
 
 theftController.bikeFound = async (request, h) => {
