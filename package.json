@@ -21,7 +21,7 @@
     "@hapi/vision": "^5.5.2",
     "dotenv": "^8.0.0",
     "hapi-swagger": "^10.0.1",
-    "mysql": "github:mysqljs/mysql",
+    "promise-mysql": "^3.3.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {

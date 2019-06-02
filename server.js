@@ -4,24 +4,20 @@ const Vision = require('@hapi/vision');
 const HapiSwagger = require('hapi-swagger');
 require('dotenv').config();
 
-
 const routes = require('./server/routes/apiRoutes.js');
 const logger = require('./server/utils/logger.js');
 const dbconnection = require('./server/utils/dbConnection.js');
+const userTable = require('./server/models/userModel.js');
+const theftTable = require('./server/models/theftModel.js');
 
-
-dbconnection.connect((error) => {
-  if (error) {
-    logger.error('error connecting mysql db');
-  }
-  dbconnection.query('CREATE DATABASE IF NOT EXISTS bike_db', (err) => {
-    if (err) {
-      logger.error(err);
-    }
-    logger.info('Database connected');
-  });
+dbconnection.then((conn) => {
+  conn.query('CREATE DATABASE IF NOT EXISTS bike_db');
+  conn.query(userTable);
+  conn.query(theftTable);
+  logger.info('connected to db and created the tables');
+}).catch((err) => {
+  logger.error(err);
 });
-
 
 const init = async () => {
   const server = Hapi.server({
